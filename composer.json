@@ -1,0 +1,15 @@
+{
+  "name": "inboxili/inboxili",
+  "description": "PHP client for the Inboxili transactional email API",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["email", "transactional-email", "inboxili", "email-api"],
+  "homepage": "https://inboxili.com/integrations/php",
+  "support": { "issues": "https://github.com/inboxili/inboxili-php/issues", "source": "https://github.com/inboxili/inboxili-php" },
+  "require": { "php": ">=8.1", "ext-curl": "*", "ext-json": "*" },
+  "require-dev": { "phpunit/phpunit": "^9.6 || ^10.5 || ^11.0" },
+  "autoload": { "psr-4": { "Inboxili\\": "src/" } },
+  "autoload-dev": { "psr-4": { "Inboxili\\Tests\\": "tests/" } },
+  "scripts": { "test": "phpunit" },
+  "config": { "sort-packages": true }
+}

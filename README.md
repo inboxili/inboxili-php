@@ -95,7 +95,7 @@ One recipient per request. No attachments, CC, BCC or reply-to fields, and the c
 Inject a fake transport:
 
 ```php
-$client = new Client('test', transport: $fakeImplementingInboxiliHttpTransport);
+$client = new Client("test", transport: $yourFakeTransport); // implements Inboxili\Http\Transport
 ```
 
 ## Development

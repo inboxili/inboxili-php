@@ -26,7 +26,7 @@ final class CurlTransport implements Transport
         $raw = curl_exec($ch);
         $status = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         $error = curl_error($ch);
-        curl_close($ch);
+        // No curl_close(): the handle is freed automatically, and the function is deprecated as of PHP 8.5.
 
         if ($raw === false || $status === 0) {
             throw new ConnectionException('No response from Inboxili. The email may or may not have been sent. ' . $error);

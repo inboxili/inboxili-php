@@ -15,7 +15,7 @@ use Inboxili\Http\Transport;
  */
 final class Client
 {
-    public const VERSION = '0.1.0';
+    public const VERSION = '0.1.1';
     public const DEFAULT_BASE_URL = 'https://api.inboxili.com/api/v1';
 
     public readonly Emails $emails;

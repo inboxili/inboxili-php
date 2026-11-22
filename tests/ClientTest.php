@@ -55,6 +55,14 @@ final class ClientTest extends TestCase
         );
     }
 
+    public function testQueued202IsSuccessWithQueueId(): void
+    {
+        $t = new FakeTransport();
+        $t->queue = [[202, '{"status":"queued","message_id":null,"queue_id":"q-1"}']];
+        $out = $this->client($t)->emails->send(['to' => 'a@b.co', 'from_email' => 'x@y.co', 'template_id' => 't']);
+        $this->assertSame(['queued', null, 'q-1'], [$out->status, $out->messageId, $out->queueId]);
+    }
+
     public function testValidatesBeforeRequest(): void
     {
         $t = new FakeTransport();

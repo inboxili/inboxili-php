@@ -7,6 +7,11 @@ All notable changes to inboxili/inboxili (PHP) are documented here. The format f
 ### Fixed
 - Removed the `curl_close()` call, which raises a deprecation notice on PHP 8.5 and has had no effect since PHP 8.0.
 
+## [0.1.2] - 2026-11-22
+
+### Added
+- `SendEmailResponse::$queueId`, and HTTP 202 `queued` responses are treated as success. Each API key now delivers at most 100 emails a minute and queues the rest.
+
 ## [0.1.0] - 2026-10-07
 
 ### Added

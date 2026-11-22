@@ -53,6 +53,6 @@ final class Emails
 
         $body = $this->client->post('/transactional/send', array_filter($message, static fn ($v) => $v !== null));
 
-        return new SendEmailResponse((string) ($body['status'] ?? ''), $body['message_id'] ?? null);
+        return new SendEmailResponse((string) ($body['status'] ?? ''), $body['message_id'] ?? null, $body['queue_id'] ?? null);
     }
 }

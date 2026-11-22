@@ -74,9 +74,25 @@ try {
 | 401 | `unauthorized` | Missing, invalid, revoked or expired key |
 | 403 | `forbidden` | Missing scope, or IP not allowed |
 | 422 | `validation_error`, `sender_not_verified`, `send_failed` | Bad request, unverified sender, or provider rejection |
-| 429 | `rate_limited` | Over 120 requests per minute for this key |
+| 429 | `rate_limited` | Over 600 requests per minute for this key |
+| 429 | `queue_full` | 20,000 emails already queued for this key |
 
 **Retries.** Only HTTP 429 is retried (`maxRetries`, default 2), because the request was rejected before sending. Timeouts and 5xx are never retried: the API has no idempotency key, so a retry could send a duplicate. Record "already sent" in your own database for emails that must not repeat.
+
+## Pacing and queued emails
+
+Each API key delivers at most **100 emails per minute**. If you send faster, the API does not reject the extra emails: it accepts them and answers HTTP 202, and they are delivered in order as capacity frees up.
+
+```php
+$result = $inboxili->emails->send([...]);
+
+if ($result->status === 'queued') {
+    // Accepted and waiting. messageId is null until delivery; keep queueId to match later webhook events.
+    error_log('queued ' . $result->queueId);
+}
+```
+
+Treat `queued` as success and **do not send it again**. The queue holds up to 20,000 emails per key, after which the API returns `queue_full`. For bulk jobs, use a separate API key so they cannot delay time-critical emails such as login codes.
 
 ## Webhooks
 
